@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    networks:
+      - ci-network
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    networks:
+      - ci-network
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+    ports:
+      - "9000:9000"
+
+volumes:
+  jenkins_home:
+  sonarqube_data:
+
+networks:
+  ci-network:
+    external: true
