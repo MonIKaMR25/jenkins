@@ -1,0 +1,47 @@
+name: CI & SonarCloud
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  tests-sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: xdebug
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Fix permissions for phpunit
+        run: chmod +x vendor/bin/phpunit
+
+      - name: Run PHPUnit (with coverage)
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: SonarCloud Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner \
+            -Dsonar.organization=monikamr25 \
+            -Dsonar.projectKey=MonIKaMR25_jenkins \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.php.coverage.reportPaths=coverage.xml
