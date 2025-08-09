@@ -41,5 +41,5 @@ jobs:
           sonar-scanner \
             -Dsonar.organization=monikamr25 \
             -Dsonar.projectKey=MonIKaMR25_jenkins \
-            -Dsonar.php.coverage.reportPaths=coverage.xml
             -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.php.coverage.reportPaths=coverage.xml
