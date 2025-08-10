@@ -35,11 +35,12 @@ jobs:
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - name: SonarCloud Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-            -Dsonar.organization=monikamr25 \
-            -Dsonar.projectKey=MonIKaMR25_jenkins \
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.organization=monikamr25
+            -Dsonar.projectKey=MonIKaMR25_jenkins
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.php.coverage.reportPaths=coverage.xml
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
