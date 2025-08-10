@@ -34,3 +34,14 @@ jobs:
             -Dsonar.php.coverage.reportPaths=coverage.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Si necesitas usar SonarQube self-hosted en vez de SonarCloud, usa tu fork:
+      # - name: SonarQube Scan
+      #   uses: MonIKaMR25/sonarqube-scan-action@v5.0.0
+      #   with:
+      #     projectBaseDir: .
+      #     args: >
+      #       -Dsonar.projectKey=MonIKaMR25_jenkins
+      #       -Dsonar.host.url=https://tu.sonarqube.local
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
