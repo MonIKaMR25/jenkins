@@ -21,6 +21,13 @@ jobs:
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
 
+      - name: Install SonarScanner
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+          mv sonar-scanner-5.0.1.3006-linux $HOME/sonar-scanner
+          echo "$HOME/sonar-scanner/bin" >> $GITHUB_PATH
+
       - name: Run PHPUnit (with coverage)
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
