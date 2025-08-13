@@ -1,4 +1,24 @@
 pipeline {
+  agent any
+  environment {
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
+    }
+  stages {
+    stage('SonarCloud Analysis') {
+            steps {
+                sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN'
+            }
+        }
+    stage('Docker Access Test') {
+      steps {
+        script {
+          sh 'docker ps'
+        }
+      }
+    }
+  }
+}
+pipeline {
   agent { label 'agente1' }
 
   stages {
