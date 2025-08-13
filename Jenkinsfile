@@ -1,34 +1,21 @@
 pipeline {
   agent any
   environment {
-        SONAR_TOKEN = credentials('SONAR_TOKEN')
-    }
+    SONAR_TOKEN = credentials('SONAR_TOKEN')
+  }
   stages {
     stage('SonarCloud Analysis') {
-            steps {
-                sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN'
-            }
-        }
-    stage('Docker Access Test') {
       steps {
-        script {
-          sh 'docker ps'
-        }
+        sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN'
       }
     }
-  }
-}
-pipeline {
-  agent { label 'agente1' }
-
-  stages {
-    stage('Vertificar Docker') {
+    stage('Docker Access Test') {
       steps {
+        sh 'docker ps'
         sh 'docker info'
       }
     }
-
-    stage('Sonarqube') {
+    stage('SonarQube Analysis') {
       steps {
         script {
           docker.image('sonarsource/sonar-scanner-cli').inside('--network ci-network') {
@@ -37,6 +24,8 @@ pipeline {
         }
       }
     }
+  }
+}
 
     // stage('Docker build') {
     //   steps {
