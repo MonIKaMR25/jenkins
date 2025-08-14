@@ -17,7 +17,7 @@ RUN apt-get update && \
 	mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner && \
 	ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner && \
 	rm sonar-scanner-cli-5.0.1.3006-linux.zip && \
-	usermod -aG root jenkins
+	groupadd docker || true && usermod -aG docker jenkins
 
 # Volvemos a cambiar al usuario jenkins
 USER jenkins
