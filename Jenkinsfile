@@ -33,7 +33,7 @@ pipeline {
       steps {
         script {
           try {
-            sshagent(credentials: ['71a7ee52-1c6a-476a-860f-6070ab4eb875']) {
+            sshagent(credentials: ['jenkins-ssh-key']) {
               /* Test SSH connectivity first */
               sh 'ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no ubuntu@165.22.3.56 "echo Connection successful"'
               /* If connection works, run deployment */
