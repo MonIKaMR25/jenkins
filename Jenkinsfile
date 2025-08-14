@@ -4,9 +4,14 @@ pipeline {
     SONAR_TOKEN = credentials('SONAR_TOKEN')
   }
   stages {
+    stage('PHPUnit') {
+      steps {
+        sh 'vendor/bin/phpunit --log-junit=phpunit-report.xml'
+      }
+    }
     stage('SonarCloud Analysis') {
       steps {
-        sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN'
+        sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.php.tests.reportPath=phpunit-report.xml'
       }
     }
     stage('Docker Access Test') {
