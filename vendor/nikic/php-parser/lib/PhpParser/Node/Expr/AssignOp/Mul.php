@@ -8,4 +8,4 @@ class Mul extends AssignOp {
     public function getType(): string {
         return 'Expr_AssignOp_Mul';
     }
-}v
+}
