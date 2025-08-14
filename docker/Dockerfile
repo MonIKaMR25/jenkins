@@ -19,5 +19,8 @@ RUN apt-get update && \
 	rm sonar-scanner-cli-5.0.1.3006-linux.zip && \
 	groupadd docker || true && usermod -aG docker jenkins
 
+# Instalar PHP y PHP CLI
+RUN apt-get update && apt-get install -y php php-cli
+
 # Volvemos a cambiar al usuario jenkins
 USER jenkins
