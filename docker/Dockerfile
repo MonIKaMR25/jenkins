@@ -8,19 +8,7 @@ COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin
 USER root
 
 # Agregamos al usuario jenkins al grupo root
-
-# Instalar SonarScanner
-RUN apt-get update && \
-	apt-get install -y unzip wget && \
-	wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip && \
-	unzip sonar-scanner-cli-5.0.1.3006-linux.zip && \
-	mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner && \
-	ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner && \
-	rm sonar-scanner-cli-5.0.1.3006-linux.zip && \
-	groupadd docker || true && usermod -aG docker jenkins
-
-# Instalar PHP, PHP CLI y extensiones necesarias para PHPUnit
-RUN apt-get update && apt-get install -y php php-cli php-dom php-mbstring php-xml php-xmlwriter
+RUN usermod -aG root jenkins
 
 # Volvemos a cambiar al usuario jenkins
 USER jenkins
