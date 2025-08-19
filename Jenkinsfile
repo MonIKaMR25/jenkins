@@ -14,7 +14,8 @@ pipeline {
     }
     stage('Run test') {
       steps {
-        sh 'docker run jenkins-laravel ./vendor/bin/phpunit tests'
+        // Monta el workspace y ejecuta PHPUnit en el directorio correcto
+        sh 'docker run -v $PWD:/app -w /app jenkins-laravel ./vendor/bin/phpunit tests'
       }
     }
   }
