@@ -18,4 +18,14 @@ pipeline {
       }
     }
   }
+
+  post {
+    success {
+      slackSend (channel: '#nuevo-canal', message: "Todo bien")
+    }
+    
+    failure {
+      slackSend (channel: '#nuevo-canal', message: "Algo anda mal")
+    }
+  }
 }
